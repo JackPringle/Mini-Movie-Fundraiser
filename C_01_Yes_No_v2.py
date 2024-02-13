@@ -24,13 +24,13 @@ def yes_no(question):
 
 # Main Routine...
 while True:
-    # Ask the user
-    show_instructions = yes_no("Do you know how to purchase tickets? ")
+    # Ask the user if they want to see the instructions
+    want_instructions = yes_no("Do you want to read the instructions? ")
 
-    # If they say yes, output 'program continues'
-    if show_instructions == "yes" or show_instructions == "y":
+    # If they say yes, show the instructions
+    if want_instructions == "yes" or want_instructions == "y":
+        print("Show Instructions...")
+
+    # If they say no, continue program
+    elif want_instructions == "no" or want_instructions == "n":
         print("program continues")
-
-    # If they say no, output 'display instructions'
-    elif show_instructions == "no" or show_instructions == "n":
-        print("display instructions")
