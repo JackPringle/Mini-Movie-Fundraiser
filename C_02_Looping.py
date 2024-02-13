@@ -14,8 +14,7 @@ while tickets_sold < MAX_TICKETS:
     tickets_sold += 1
 
 # Output number of tickets sold
-if tickets_sold == "MAX_TICKETS":
+if tickets_sold == MAX_TICKETS:
     print("Congratulations! You have sold all the tickets")
 else:
     print(f"You have sold {tickets_sold} ticket/s.  There is {MAX_TICKETS - tickets_sold} ticket/s remaining")
-
