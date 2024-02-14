@@ -22,9 +22,12 @@ def string_checker(question, valid_list, error):
 # Main routine...
 
 # List of valid responses
-payment_options = ["credit", "debit", "eftpos", "cash"]
+payment_options = ["credit", "debit", "eftpos", "cash", "xxx"]
 
 # Ask the question, call the string checker function
 chosen_payment = string_checker("How would you like to pay? 'credit', 'debit', 'eftpos', or 'cash': ",
-                                "payment_options", "Please enter 'credit', 'debit', "
-                                                   "eftpos', or 'cash' ")
+                                payment_options, "Please enter 'credit', 'debit', "
+                                                 "eftpos', or 'cash' ")
+
+if chosen_payment == "xxx":
+    print("< You have chosen to quit >")
