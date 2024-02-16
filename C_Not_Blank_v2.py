@@ -12,7 +12,7 @@ def not_blank(question):
         # If exit code is entered, break
         elif response == "xxx":
             print("< You have chosen to quit >")
-            break
+            return response
 
         else:
             return response
@@ -25,5 +25,5 @@ while True:
     name = not_blank("Enter your name (or 'xxx' to quit): ")
 
     # If they have chosen to quit, output the name they chose
-    if name is not None:
+    if name != "xxx":
         print(f"Your name is {name}")
