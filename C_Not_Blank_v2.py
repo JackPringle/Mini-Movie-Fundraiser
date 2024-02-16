@@ -9,11 +9,6 @@ def not_blank(question):
         if response == "":
             print("Sorry this can't be blank. Please try again")
 
-        # If exit code is entered, break
-        elif response == "xxx":
-            print("< You have chosen to quit >")
-            return response
-
         else:
             return response
 
