@@ -24,7 +24,7 @@ for case in range(0, 5):
     print("You chose", want_instructions)
 
 for case in range(0, 5):
-    pay_method = string_checker("Chose a payment method 'cash' 'ca' or 'credit' 'cr': ", 2, payment_list)
+    pay_method = string_checker("Chose a payment method (cash / credit): ", 2, payment_list)
 
     print("You chose", pay_method)
 
