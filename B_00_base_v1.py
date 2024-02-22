@@ -17,7 +17,6 @@ def not_blank(question):
 
 # Checks user enters an integer to a given question
 def num_check(question):
-
     while True:
 
         try:
@@ -33,13 +32,12 @@ def num_check(question):
 
 # Calculate the ticket price based on the age
 def calc_ticket_price(var_age):
-
     # Ticket is $7.50 for users under 16
     if var_age < 16:
         price = 7.5
 
     # Ticket is $10.50 for users between 16 and 64
-    elif var_age <65:
+    elif var_age < 65:
         price = 10.5
 
     # Ticket price is $6.50 for seniors (65+)
@@ -52,9 +50,8 @@ def calc_ticket_price(var_age):
 # Checks that user enters a valid response (e.g. yes / no ,
 # cash / credit) based on a list of options
 def string_checker(question, num_letters, valid_responses):
-
     # Make a custom error message depending on question
-    error = f"Please choose {valid_responses[0]} or { valid_responses[1]}"
+    error = f"Please choose {valid_responses[0]} or {valid_responses[1]}"
 
     while True:
 
@@ -73,6 +70,20 @@ def string_checker(question, num_letters, valid_responses):
 # Currency formatting function
 def currency(x):
     return "${:.2f}".format(x)
+
+
+# Contains instructions
+def instructions():
+    print('''
+ℹℹℹ Instructions ℹℹℹ
+
+Enter each persons name, age and payment method.  
+
+When you are done, type 'xxx' for the name.
+
+The program will output the details for the tickets you have sold.
+    
+    ''')
 
 
 # Main Routine...
@@ -98,24 +109,15 @@ mini_movie_dict = {
 }
 
 # Ask the user if they want to see the instructions
-want_instructions = string_checker("Do you want to read the instructions? (y/n): ", 1, yes_no_list)
+want_instructions = string_checker("\nDo you want to read the instructions? (y/n): ", 1, yes_no_list)
 
 # If they say yes, show the instructions
-if want_instructions == "yes" or want_instructions == "y":
-    print()
-    print("-"*50)
-    print("Show Instructions...")
-    print()
-    print()
-    print("-"*50)
-
-# If they say no, continue program
-elif want_instructions == "no" or want_instructions == "n":
-    print()
+if want_instructions == "yes":
+    instructions()
 
 # Loop to sell tickets
 while tickets_sold < MAX_TICKETS:
-    name = not_blank("Please enter your name or 'xxx' to quit: ")
+    name = not_blank("\nPlease enter your name or 'xxx' to quit: ")
 
     if name == "xxx":
         break
@@ -182,15 +184,15 @@ print()
 
 # Output table with a ticket data
 print(mini_movie_frame)
-
 print()
+
 print("---- Ticket Cost / Profit ----")
 
 # Output total ticket sales and profit
 print(f"Total Ticket Sales: ${total:.2f}")
 print(f"Total Profit: ${profit:.2f}")
-
 print()
+
 # Output number of tickets sold
 if tickets_sold == MAX_TICKETS:
     print("Congratulations! You have sold all the tickets")
