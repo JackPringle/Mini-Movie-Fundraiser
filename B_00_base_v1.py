@@ -1,28 +1,5 @@
 # Functions...
 
-# Checks user has entered yes / no to a question
-def yes_no(question):
-    while True:
-        response = input(question).lower()
-
-        # If the response is yes or y, return yes
-        if response == "yes" or response == "y":
-            return "yes"
-
-        # If the response is no or n, return no
-        elif response == "no" or response == "n":
-            return "no"
-
-        # If exit code is entered, break from loop
-        elif response == "xxx":
-            print(" - You have chosen to exit -")
-            break
-
-        # Other responses will trigger a helpful statement
-        else:
-            print("Please enter yes or no")
-
-
 # Checks that the user response is not blank
 def not_blank(question):
     while True:
@@ -69,18 +46,48 @@ def calc_ticket_price(var_age):
     return price
 
 
+# Checks that user enters a valid response (e.g. yes / no ,
+# cash / credit) based on a list of options
+def string_checker(question, num_letters, valid_responses):
+
+    # Make a custom error message depending on question
+    error = f"Please choose {valid_responses[0]} or { valid_responses[1]}"
+
+    while True:
+
+        # Ask the question
+        response = input(question).lower()
+
+        # If response is a valid response or the correct short version, return item
+        for item in valid_responses:
+            if response == item[:num_letters] or response == item:
+                return item
+
+        # If response is no valid, print custom error
+        print(error)
+
+
 # Main Routine...
 
 # Set maximum number of tickets below
 MAX_TICKETS = 3
 tickets_sold = 0
 
+# Set up list of valid responses
+yes_no_list = ["yes", "no"]
+payment_list = ["cash", "credit"]
+
 # Ask the user if they want to see the instructions
-want_instructions = yes_no("Do you want to read the instructions? ")
+want_instructions = string_checker("Do you want to read the instructions? (y/n): ", 1, yes_no_list)
 
 # If they say yes, show the instructions
 if want_instructions == "yes" or want_instructions == "y":
+    print()
+    print("-"*50)
     print("Show Instructions...")
+    print()
+    print()
+    print("-"*50)
 
 # If they say no, continue program
 elif want_instructions == "no" or want_instructions == "n":
@@ -112,7 +119,9 @@ while tickets_sold < MAX_TICKETS:
 
     # Calculate ticket cost
     ticket_cost = calc_ticket_price(age)
-    print(f"Age: {age}, Ticket Price: ${ticket_cost:.2f}")
+
+    pay_method = string_checker("Choose a payment method (Cash / Credit): ", 2, payment_list)
+    print(f"you chose {pay_method}")
 
     tickets_sold += 1
 
