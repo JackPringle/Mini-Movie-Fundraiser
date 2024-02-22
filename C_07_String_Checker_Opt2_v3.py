@@ -7,14 +7,6 @@ def string_checker(question, num_letters, valid_responses):
     # Make a custom error message depending on question
     error = f"Please choose {valid_responses[0]} or { valid_responses[1]}"
 
-    # If the response only needs to be checked for one letter
-    if num_letters == 1:
-        short_version = 1
-
-    # If the response needs to be checked for two letters
-    else:
-        short_version = 2
-
     while True:
 
         # Ask the question
@@ -22,7 +14,7 @@ def string_checker(question, num_letters, valid_responses):
 
         # If response is a valid response or the correct short version, return item
         for item in valid_responses:
-            if response == item[:short_version] or response == item:
+            if response == item[:num_letters] or response == item:
                 return item
 
         # If response is no valid, print custom error
