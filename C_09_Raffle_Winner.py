@@ -18,6 +18,7 @@ mini_movie_dict = {
 
 # Create data frame from dictionary to organise information
 mini_movie_frame = pandas.DataFrame(mini_movie_dict)
+# Comment out next line of code, so it doesn't break the code later down
 # mini_movie_frame = mini_movie_frame.set_index('Name')
 
 # Calculate the total ticket cost (ticket + surcharge)
