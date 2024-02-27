@@ -1,5 +1,6 @@
 import pandas
 import random
+from datetime import date
 
 # Functions...
 
@@ -119,10 +120,11 @@ if want_instructions == "yes":
 while tickets_sold < MAX_TICKETS:
     name = not_blank("\nPlease enter your name or 'xxx' to quit: ")
 
-    if name == "xxx":
+    if name == 'xxx' and len(all_names) > 0:
         break
-    else:
-        print(f"Your name is {name}")
+    elif name == 'xxx':
+        print("You must sell at least ONE ticket before quitting")
+        continue
 
     # Ask for age, call number checker
     age = num_check("Age: ")
@@ -173,6 +175,11 @@ mini_movie_frame['Profit'] = mini_movie_frame['Ticket Price'] - 5
 total = mini_movie_frame['Total'].sum()
 profit = mini_movie_frame['Profit'].sum()
 
+# Choose a winner from our name list and look up total won
+winner_name = random.choice(all_names)
+win_index = all_names.index(winner_name)
+total_won = mini_movie_frame.at[win_index, 'Total']
+
 # Currency Formatting (uses currency function)
 add_dollars = ['Ticket Price', 'Surcharge', 'Total', 'Profit']
 for var_item in add_dollars:
@@ -187,28 +194,54 @@ win_index = all_names.index(winner_name)
 # Look up total amount won (ie: ticket price + surcharge)
 total_won = mini_movie_frame.at[win_index, 'Total']
 
-print("---- Ticket Data ----")
-print()
-
-# Output table with a ticket data
+# Set index at end (before printing)
 mini_movie_frame = mini_movie_frame.set_index('Name')
-print(mini_movie_frame)
-print()
 
-print("---- Ticket Cost / Profit ----")
+# Get current date for heading and filename
+# Get today's date
+today = date.today()
 
-# Output total ticket sales and profit
-print(f"Total Ticket Sales: ${total:.2f}")
-print(f"Total Profit: ${profit:.2f}")
-print()
+# Get day, month and year as individual strings
+day = today.strftime("%d")
+month = today.strftime("%m")
+year = today.strftime("%Y")
 
-# Print out the Raffle winner
-print("---- Raffle Winner ----")
-print(f"Congratulations {winner_name}! You have won ${total_won}  ie: your ticket is free!")
-print()
+# Output the date and file name
+heading = f"---- Mini Movie Fundraiser Ticket Data ({day}/{month}/{year}) ----\n"
+filename = f"MMF_{day}_{month}_{year}"
 
-# Output number of tickets sold
-if tickets_sold == MAX_TICKETS:
-    print("Congratulations! You have sold all the tickets")
-else:
-    print(f"You have sold {tickets_sold} ticket/s.  There is {MAX_TICKETS - tickets_sold} ticket/s remaining")
+# Change frame to a string so that we can export it to file
+mini_movie_string = pandas.DataFrame.to_string(mini_movie_frame)
+
+# Create strings for printing....
+ticket_cost_heading = "\n ---- Ticket Cost / Profit ----"
+total_ticket_sales = f"Total Ticket Sales: ${total}"
+total_profit = f"Total Profit: ${profit}"
+
+# Edit text below! It needs to work if we have unsold tickets
+sale_status = "\n**** All the tickets have been sold ****"
+
+winner_heading = "\n---- Raffle Winner ----"
+winner_text = f"The winner of the raffle is {winner_name}. " \
+                f"They have won ${total_won}. ie: Their ticket is " \
+                "free!"
+
+# List holding content to print / write to file
+to_write = [heading, mini_movie_string, ticket_cost_heading, total_ticket_sales, total_profit, sale_status, winner_heading, winner_text]
+
+# Print output
+for item in to_write:
+    print(item)
+
+# Write output to file
+# Create file to hold data (add .txt extension)
+write_to = "{filename}.txt"
+text_file = open(write_to, "w+" )
+
+for item in to_write:
+    text_file.write(item)
+    text_file.write("\n")
+
+# Close file
+text_file.close()
+
