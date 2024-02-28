@@ -2,6 +2,7 @@ import pandas
 import random
 from datetime import date
 
+
 # Functions...
 
 # Checks that the user response is not blank
@@ -60,9 +61,9 @@ def string_checker(question, num_letters, valid_responses):
         response = input(question).lower()
 
         # If response is a valid response or the correct short version, return item
-        for item in valid_responses:
-            if response == item[:num_letters] or response == item:
-                return item
+        for string_item in valid_responses:
+            if response == string_item[:num_letters] or response == string_item:
+                return string_item
 
         # If response is no valid, print custom error
         print(error)
@@ -191,9 +192,6 @@ winner_name = random.choice(all_names)
 # Get position of winner name in list
 win_index = all_names.index(winner_name)
 
-# Look up total amount won (ie: ticket price + surcharge)
-total_won = mini_movie_frame.at[win_index, 'Total']
-
 # Set index at end (before printing)
 mini_movie_frame = mini_movie_frame.set_index('Name')
 
@@ -215,19 +213,23 @@ mini_movie_string = pandas.DataFrame.to_string(mini_movie_frame)
 
 # Create strings for printing....
 ticket_cost_heading = "\n ---- Ticket Cost / Profit ----"
-total_ticket_sales = f"Total Ticket Sales: ${total}"
-total_profit = f"Total Profit: ${profit}"
+total_ticket_sales = f"Total Ticket Sales: ${total:.2f}"
+total_profit = f"Total Profit: ${profit:.2f}"
 
-# Edit text below! It needs to work if we have unsold tickets
-sale_status = "\n**** All the tickets have been sold ****"
+# Shows users how many tickets have been sold
+if tickets_sold == MAX_TICKETS:
+    sales_status = "\n**** All the tickets have been sold ****\n"
+else:
+    sales_status = f"\n**** You have sold {tickets_sold} out of {MAX_TICKETS} tickets ****"
 
 winner_heading = "\n---- Raffle Winner ----"
 winner_text = f"The winner of the raffle is {winner_name}. " \
-                f"They have won ${total_won}. ie: Their ticket is " \
-                "free!"
+              f"They have won ${total_won:.2f}. ie: Their ticket is " \
+              "free!"
 
 # List holding content to print / write to file
-to_write = [heading, mini_movie_string, ticket_cost_heading, total_ticket_sales, total_profit, sale_status, winner_heading, winner_text]
+to_write = [heading, mini_movie_string, ticket_cost_heading, total_ticket_sales, total_profit, sales_status,
+            winner_heading, winner_text]
 
 # Print output
 for item in to_write:
@@ -235,8 +237,8 @@ for item in to_write:
 
 # Write output to file
 # Create file to hold data (add .txt extension)
-write_to = "{filename}.txt"
-text_file = open(write_to, "w+" )
+write_to = f"{filename}.txt"
+text_file = open(write_to, "w+")
 
 for item in to_write:
     text_file.write(item)
@@ -244,4 +246,3 @@ for item in to_write:
 
 # Close file
 text_file.close()
-

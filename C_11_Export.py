@@ -65,11 +65,12 @@ sale_status = "\n**** All the tickets have been sold ****"
 
 winner_heading = "\n---- Raffle Winner ----"
 winner_text = f"The winner of the raffle is {winner_name}. " \
-                f"They have won ${total_won}. ie: Their ticket is " \
-                "free!"
+              f"They have won ${total_won}. ie: Their ticket is " \
+              "free!"
 
 # List holding content to print / write to file
-to_write = [heading, mini_movie_string, ticket_cost_heading, total_ticket_sales, total_profit, sale_status, winner_heading, winner_text]
+to_write = [heading, mini_movie_string, ticket_cost_heading, total_ticket_sales, total_profit, sale_status,
+            winner_heading, winner_text]
 
 # Print output
 for item in to_write:
@@ -77,8 +78,8 @@ for item in to_write:
 
 # Write output to file
 # Create file to hold data (add .txt extension)
-write_to = "{filename}.txt"
-text_file = open(write_to, "w+" )
+write_to = f"{filename}.txt"
+text_file = open(write_to, "w+")
 
 for item in to_write:
     text_file.write(item)
